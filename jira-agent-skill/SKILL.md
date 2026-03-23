@@ -5,8 +5,8 @@ description: |
   Use this skill whenever the user wants to: start/stop/restart the ADK web server,
   test Jira API connectivity, run the agent in web or CLI mode, troubleshoot agent errors
   (HTTP 410, bidiGenerateContent, authentication failures, missing children issues),
-  add new Jira tools or modify existing ones, update the system prompt, switch between
-  agent versions (v1 read-only vs v2 read+create), or deploy/push the agent code.
+  add new Jira tools or modify existing ones, update the system prompt, or deploy/push
+  the agent code.
   Also use when the user mentions "jira agent", "ADK server", "jira skill", "requirements
   document", "create epic", "create stories", or asks about the agent's capabilities.
 ---
@@ -30,18 +30,14 @@ C:/agents/JIRA Skill/
 ├── .env                              # Credentials (Gemini API key + Jira auth)
 ├── requirements.txt                  # google-adk, requests, python-dotenv
 ├── jira_skill/
-│   ├── agent.py                      # ACTIVE agent (v2 — read + create)
-│   ├── agent_v1.py                   # Backup: read-only agent (rollback target)
-│   ├── agent_v2.py                   # Archive: original v2 draft
+│   ├── agent.py                      # Agent definition (read + create)
 │   ├── prompts/
-│   │   ├── system_prompt.py          # v1 prompt (read-only)
-│   │   └── system_prompt_v2.py       # v2 prompt (read + create) — ACTIVE
+│   │   └── system_prompt_v2.py       # System prompt (read + create modes)
 │   └── tools/
-│       ├── jira_tools.py             # v1 tools (read-only)
-│       └── jira_tools_v2.py          # v2 tools (read + create) — ACTIVE
+│       └── jira_tools_v2.py          # Jira API tools (read + create)
 ```
 
-**Key point**: ADK discovers the agent from `jira_skill/agent.py` → `root_agent`. The file `agent_v2.py` is NOT auto-discovered — it's an archive. To change which agent is active, update `agent.py`.
+**Key point**: ADK discovers the agent from `jira_skill/agent.py` → `root_agent`.
 
 ## Available Tools (in jira_tools_v2.py)
 
@@ -119,20 +115,6 @@ from jira_skill.agent import root_agent
 print('Agent:', root_agent.name)
 print('Tools:', [t.__name__ for t in root_agent.tools])
 "
-```
-
-## Rollback
-
-To revert to the read-only v1 agent:
-
-```bash
-cp "C:/agents/JIRA Skill/jira_skill/agent_v1.py" "C:/agents/JIRA Skill/jira_skill/agent.py"
-```
-
-To restore v2:
-
-```bash
-# Restore from agent_v2.py or re-apply the v2 imports in agent.py
 ```
 
 ## Troubleshooting
