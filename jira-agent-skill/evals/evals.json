@@ -1,0 +1,23 @@
+{
+  "skill_name": "jira-agent",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "my jira agent ADK server isn't running, how do I start it? I think it was on port 8000",
+      "expected_output": "Should provide the correct adk web command, the project path C:/agents/JIRA Skill, and mention selecting jira_skill from the dropdown at localhost:8000",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I changed the jira credentials in .env but I want to make sure they work before starting the agent. How can I quickly test if my Jira connection is working?",
+      "expected_output": "Should provide the python one-liner that imports list_projects from jira_tools_v2 and runs it to verify connectivity, mentioning to cd into C:/agents/JIRA Skill first",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "when I ask the agent to generate requirements for epic AA-1 it says no child issues found, but I know there are stories under it. what's wrong?",
+      "expected_output": "Should identify the HTTP 410 / API v3 migration issue or the fallback logic bug in get_epic_children, and explain the fix involving /rest/api/3/search/jql and checking len(all_issues) > 0",
+      "files": []
+    }
+  ]
+}
