@@ -1,0 +1,35 @@
+{
+  "skill_name": "jira-agent",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Generate a requirements document for epic PROJ-42",
+      "expected_output": "Should enter READ MODE, fetch the epic details using the MCP connector, fetch all child issues, fetch details and comments for each child, then synthesize a Markdown requirements document with sections: Project Overview, Functional Requirements, Non-Functional Requirements, User Stories Summary, Acceptance Criteria Compilation, Priority Matrix, Dependencies and Risks, Technical Considerations, and Appendix",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Create Jira issues for a new user authentication feature using OAuth2 and social login",
+      "expected_output": "Should enter CREATE MODE. Since no project key is given, should list all accessible Jira projects via MCP and ask the user to pick one. Once a project is selected, should verify issue types are available (Epic, Story, Task), propose a breakdown of 1 Epic + 3-8 user-facing Stories in 'As a [user], I want [goal], so that [benefit]' format + 2-5 technical Tasks, and ask the user to review or auto-create. Should create the epic first and stop if it fails.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "The epic PROJ-10 has no child issues showing up in my requirements document but I know there are stories under it",
+      "expected_output": "Should explain that READ MODE first queries child issues using a parent filter, and if no results are returned it retries using an Epic Link filter. If both return empty, the document is generated from the epic description only. Should suggest verifying the epic key is correct and that the MCP connector has access to the project.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Break down this objective into Jira tickets for project AA: Build a real-time notifications system using WebSockets",
+      "expected_output": "Should enter CREATE MODE with project key AA already provided. Should skip listing projects and go directly to checking available issue types for project AA. Should propose a breakdown with 1 Epic, 3-8 Stories (user-facing notification scenarios in user story format with acceptance criteria), and 2-5 Tasks (WebSocket server setup, infrastructure, monitoring). Should ask whether to auto-create or review first.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "What are the non-functional requirements for the epic I just asked you to document?",
+      "expected_output": "Should explain that non-functional requirements are inferred from story labels, descriptions, and components in READ MODE. All inferred requirements must be explicitly marked as 'Inferred' with the reasoning provided. Should not fabricate requirements — only surface what is derivable from the Jira data returned by the MCP connector.",
+      "files": []
+    }
+  ]
+}
